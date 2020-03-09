@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Решение №2</title>
+</head>
+<body>
+    <script>
+
+        let mas = [];
+
+        //Пустое ли сообщение
+        function notEmpty(mail){
+            if(mail.trim() !== ''){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        //Проверка на наличие @
+        function includeIt(mail){
+            if(mail.indexOf('@')==-1){
+                return true;
+            }else{
+                return false;
+            }
+        }
+        
+        function whatSend(mail){
+            switch(mail){
+                case 'спам': alert('Вы пытаетесь отправить спам');
+                    break;
+                case 'spam': alert('You are trying to sand spam');
+                    break;    
+                case mail: alert('Cообщение отправлено');
+                    return mail;
+                    break;
+            }
+        }
+
+        class MailBox{
+            beforeSend(mail,func){
+                mas.push(func)
+                mas.map(val => {
+                    if(val === false){
+                        return mail = 'spam';
+                    }else{
+                        return mail;
+                    }
+                })
+                console.log('beforeSend: ' + mail + '\n\n\n');
+                return mail;
+            }
+            
+            afterSend(func){
+                if(func !== undefined)console.log('Новое сообщение: ' + func);
+            }
+
+            sendMail(mail){
+                if(this.beforeSend(mail,notEmpty(mail) && includeIt(mail)) !== 'spam'){
+                    this.afterSend(whatSend(mail));
+                }
+            }
+        }
+
+        let mailbox = new MailBox();
+
+        //--------------------------------Тестирование-------------------------------//
+        //mailbox.beforeSend(mail = 'Test text',notEmpty(mail) && includeIt(mail));
+        //mailbox.beforeSend(mail = 'Test @ text',notEmpty(mail) && includeIt(mail));
+        //mailbox.sendMail('some msg');
+        //mailbox.sendMail('spam');
+        //mailbox.afterSend(whatSend('same text'));
+        //mailbox.afterSend(whatSend('spam'));
+    </script>
+</body>
+</html>
